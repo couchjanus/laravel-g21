@@ -17,13 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-$router->get('/test', function () {
-   
-    return view('hello', ['message'=>"Hello from Route"]);
-});
+
+// Route::get('admin', 'App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
 
 Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")->group(function(){ 
-    Route::get('', 'DashboardController')->name('dashboard');
+    Route::get('', 'DashboardController@index')->name('dashboard');
     Route::get('config', 'ConfigController@index')->name('config');
     Route::resource('users', 'UserController');
     Route::resource('categories', 'CategoryCotroller');
@@ -33,6 +31,9 @@ Route::name('site.')->prefix('site')->namespace("App\Http\Controllers")->group(f
     Route::get('', 'HomeController@index')->name('home');
     Route::get('about', 'AboutController@index')->name('about');
     Route::get('contact', 'ContactController@index')->name('contact');
+    Route::get('catalog', function () {
+        return view('web.catalog');
+    });    
 });
 
 Route::fallback(function(){
