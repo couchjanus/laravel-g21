@@ -1,43 +1,22 @@
-@extends('layouts.admin')
+<x-admin.layout>
 
-@section('sidebar')
-    <h2>Sidebar</h2>
-@endsection
+    <x-slot name="header">
+        <div class="flex justify-between">
+            <h2 class="font-weight-bolder text-xl text-grey-600">
+                All Catrgories
+            </h2>
+            <a href="{{ route('admin.categories.create') }}" class="text-white bg-blue-600 px-2">Add New</a>
+        </div>
+    
+    </x-slot>
 
-@section('content')
-<a href="{{ route('admin.categories.create') }}"><button>Add New</button></a>
-    <h1>Categories List</h1>
-    {{-- @forelse($categories as $category)
-        <li>{{ $category->id }} | {{ $category->name }}</li>
-    @empty
-        <p>No categories yet</p>
-    @endforelse --}}
+    <div class="body">
+        <div class="w-full">
+        @livewire('admin.categories-table')
+        
+        </div>
+    </div>
 
-    @isset($categories)
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
+</x-admin.layout>
 
-         @foreach($categories as $category)
-            <tr>
-                @if($loop->even)
-                    <td>{{ $category->id }}</td>
-                    <td>{{ $category->name }}</td>
-                @elseif($loop->odd)
-                    <td>{{ $category->id }}</td>
-                    <td>{{ $category->name }}</td>
-                @endif
 
-                <td><button>View</button><a href="{{ route('admin.categories.edit', $category->id) }}"><button>Edit</button></a><button>Delete</button></td>
-            </tr>
-            @endforeach
-        </table>
-
-    @endisset
-    @empty($categories)
-     <p>No categories yet</p>
-    @endempty
-@endsection
