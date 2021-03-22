@@ -25,6 +25,7 @@ Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")-
     Route::get('config', 'ConfigController@index')->name('config');
     Route::resource('users', 'UserController');
     Route::resource('categories', 'CategoryCotroller');
+    Route::resource('brands', 'BrandController');
 });
 
 Route::name('site.')->prefix('site')->namespace("App\Http\Controllers")->group(function(){ 
