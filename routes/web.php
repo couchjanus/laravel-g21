@@ -18,7 +18,6 @@ Route::get('/', function () {
 });
 
 
-// Route::get('admin', 'App\Http\Controllers\Admin\DashboardController@index')->name('dashboard');
 
 Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")->group(function(){ 
     Route::get('', 'DashboardController@index')->name('dashboard');
@@ -26,6 +25,9 @@ Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")-
     Route::resource('users', 'UserController');
     Route::resource('categories', 'CategoryCotroller');
     Route::resource('brands', 'BrandController');
+
+    Route::resource('products', 'ProductController');
+    
 });
 
 Route::name('site.')->prefix('site')->namespace("App\Http\Controllers")->group(function(){ 
