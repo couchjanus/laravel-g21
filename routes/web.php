@@ -18,6 +18,9 @@ Route::get('/', function () {
 });
 
 
+Route::get('/upload', function () {
+    return view('upload');
+});
 
 Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")->group(function(){ 
     Route::get('', 'DashboardController@index')->name('dashboard');

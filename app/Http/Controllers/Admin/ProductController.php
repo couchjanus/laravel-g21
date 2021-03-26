@@ -26,10 +26,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $brands = Brand::pluck('name', 'id');
-        $productArray = ProductStatus::asSelectArray();
-        return view('admin.products.create', compact('categories', 'brands', 'productArray'));
+        // $categories = Category::all();
+        // $brands = Brand::pluck('name', 'id');
+        // $productArray = ProductStatus::asSelectArray();
+        return view('admin.products.create');
     }
 
     /**
