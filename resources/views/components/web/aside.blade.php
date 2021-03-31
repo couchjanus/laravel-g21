@@ -1,4 +1,4 @@
-<aside class="col-span-2 h-screen py-5 bg-white">
+<aside class="w-full md:w-1/4 lg:w-1/6 h-screen py-5 bg-white">
     <div class="mt-5">
         <div class="bg-blue-50 rounded rounded-r-3xl py-3 pl-5">
             <button class="text-blue-500 flex items-center focus:outline-none">Categores</button>
