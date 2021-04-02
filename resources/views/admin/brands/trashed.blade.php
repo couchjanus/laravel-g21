@@ -3,18 +3,16 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-weight-bolder text-xl text-grey-600">
-                All Brands
+                Trashed Brands
             </h2>
-            <a href="{{ route('admin.brands.create') }}" class="text-white bg-blue-600 px-2">Add New</a>
-            <a href="{{ route('admin.brands.trashed') }}" class="text-white bg-red-600 px-2">Trashed Brands</a>
+            <a href="{{ route('admin.brands.index') }}" class="text-white bg-blue-600 px-2">All Brands</a>
         </div>
-
     
     </x-slot>
 
     <div class="body">
         <div class="w-full">
-        @livewire('admin.brands-table')
+        @livewire('admin.trashed-brands-table')
         
         </div>
     </div>

@@ -27,6 +27,11 @@ Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")-
     Route::get('config', 'ConfigController@index')->name('config');
     Route::resource('users', 'UserController');
     Route::resource('categories', 'CategoryCotroller');
+
+    // admin.brands.trashed
+    Route::get('brands/trashed', 'BrandController@trashed')->name('brands.trashed');
+    Route::post('brands/restore/{id}', 'BrandController@restore')->name('brands.restore');
+    Route::delete('brands/force/{id}', 'BrandController@force')->name('brands.force');
     Route::resource('brands', 'BrandController');
 
     Route::resource('products', 'ProductController');
@@ -45,11 +50,16 @@ Route::name('site.')->prefix('site')->namespace("App\Http\Controllers")->group(f
     });    
 });
 
+// 'product.add.to.cart'
+Route::post('/product/add/to/cart', 'App\Http\Controllers\ShopController@addToCart')->name('product.add.to.cart');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-
+Route::get('cart', 'App\Http\Controllers\CartController@index')->name('cart.index');
+// cart.item.remove
+Route::get('cart/item/{id}/remove', 'App\http\Controllers\CartController@remove')->name('cart.item.remove');
 
 //================ fallback ====================
 Route::fallback(function(){

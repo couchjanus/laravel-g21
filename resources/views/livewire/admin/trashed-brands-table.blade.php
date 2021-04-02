@@ -7,7 +7,7 @@
             <select wire:model="sortField" class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded">
                 <option value="id">Id</option>
                 <option value="name">Name</option>
-                <option value="created_at">Added Date</option>
+                <option value="deleted_at">Deleted Date</option>
             </select>
             
         </div>
@@ -35,7 +35,7 @@
                 <th class="px-4 py-2"></th>
                 <th class="px-4 py-2">Id</th>
                 <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Created At</th>
+                <th class="px-4 py-2">Deleted At</th>
                 <th class="px-4 py-2">Actions</th>
             </tr>
 
@@ -48,13 +48,14 @@
                 <td class="border px-4 py-2">{{ $brand->id }}</td>
                 <td class="border px-4 py-2">{{ $brand->name }}
                 </td>
-                <td class="border px-4 py-2">{{ $brand->created_at->diffForHumans() }}
+                <td class="border px-4 py-2">{{ $brand->deleted_at->diffForHumans() }}
                 </td>
                 <td>
-                <a href="{{ route('admin.brands.show', $brand->id) }}"><button type="submit" class="text-white bg-purple-600 hover:bg-purple-900 px-2">View</button></a>
-                <a href="{{ route('admin.brands.edit', $brand->id) }}"><button type="submit" class="text-white bg-yellow-600 hover:bg-yellow-900 px-2">Edit</button></a>
-                <form action="{{ route('admin.brands.destroy', $brand->id) }}" method="POST" onsubmit="return confirm('Are You Sure');" style="display:inline-block;">
-                @method("DELETE") @csrf <button type="submit" class="text-white bg-red-500" value="delete">delete</button>
+                <form action="{{ route('admin.brands.restore', $brand->id) }}" method="POST">@csrf
+                <button type="submit" class="text-white bg-purple-600 hover:bg-purple-900 px-2">Restore</button>
+                </form>
+                <form action="{{ route('admin.brands.force', $brand->id) }}" method="POST" onsubmit="return confirm('Are You Sure');" style="display:inline-block;">
+                @method("DELETE") @csrf <button type="submit" class="text-white bg-red-500" value="delete">Force delete</button>
                 </form>
                 </td>
             </tr>
