@@ -43,7 +43,7 @@
                         </table>
                     </div>
                 @endif
-                
+                <a href="{{ route('checkout.index') }}" class="bg-indigo-600 text-gray-100 border rounded flex-shrink-0 inline-flex">Checkout</a>
             </div>
            
         </div>

@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home.page');
 
+Route::get('/test', function () {
+    return new \App\Mail\Invoice();
+});
 
 Route::get('/upload', function () {
     return view('upload');
@@ -52,6 +55,13 @@ Route::name('site.')->prefix('site')->namespace("App\Http\Controllers")->group(f
 
 // 'product.add.to.cart'
 Route::post('/product/add/to/cart', 'App\Http\Controllers\ShopController@addToCart')->name('product.add.to.cart');
+
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/checkout', [App\Http\Controllers\CheckoutController::class, 'checkout'])->name('checkout.index');
+
+Route::post('/checkout/order', [App\Http\Controllers\CheckoutController::class, 'placeOrder'])->name('checkout.place.order');
+
+Route::get('/checkout/success', [App\Http\Controllers\CheckoutController::class, 'success'])->name('checkout.success');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
