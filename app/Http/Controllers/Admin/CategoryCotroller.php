@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryCotroller extends Controller
 {
@@ -14,9 +17,8 @@ class CategoryCotroller extends Controller
      */
     public function index()
     {
-        $categories = \DB::table('categories')->get();
-        // dump($categories);
-        return view('admin.categories.index', compact('categories'));
+        // $categories = Category::paginate(10);
+        return view('admin.categories.index');
     }
 
     /**
@@ -37,14 +39,16 @@ class CategoryCotroller extends Controller
      */
     public function store(Request $request)
     {
-        \DB::table('categories')->insert([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'status' => $request['status'],
-            'created_at'=>now(),
-            'updated_at'=>now()
-            ]
-        );
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:categories|max:30|min:3',
+            'description' => 'required',
+            'status' => 'required',
+        ])->validate();
+
+        Category::create($request->all());
+        return redirect()->route('admin.categories.index')->withInfo('Category created successfully!');
+        
     }
 
     /**
@@ -64,9 +68,8 @@ class CategoryCotroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $category = \DB::table('categories')->where('id', $id)->first();
         return view('admin.categories.edit', compact('category'));
     }
 
@@ -77,17 +80,10 @@ class CategoryCotroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        \DB::table('categories')
-        ->where('id', $id)
-        ->update([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'status' => $request['status'],
-            'updated_at'=>now()
-            ]
-        );
+    public function update(UpdateCategoryRequest $request, Category $category)
+    {   
+        $category->update($request->all());
+        return redirect()->route('admin.categories.index')->withInfo('Category updated successfully!');
     }
 
     /**

@@ -11,6 +11,17 @@
                     {{ $header }}
                     </div>
                 </header>
+
+                @if(session('info'))
+                    <x-flash-info :message="session('info')"></x-flash-info>
+                @endif
+
+                @if($errors)
+                    @foreach ($errors->all() as $error)
+                        <x-flash-error :message="$error"></x-flash-error>
+                    @endforeach
+                @endif
+                
                 <main>
                     {{ $slot }}
                 </main>

@@ -1,33 +1,58 @@
-@extends('layouts.admin')
+<x-admin.layout>
 
-@section('sidebar')
-    <h2>Sidebar</h2>
-@endsection
+    <x-slot name="header">
+        <div class="flex justify-between">
+            <h2 class="font-weight-bolder text-xl text-grey-600">
+                New Category
+            </h2>
+            <a href="{{ route('admin.categories.index') }}" class="text-white bg-blue-600 px-2">All categories</a>
+            
+        </div>
 
-@section('content')
+    
+    </x-slot>
 
-<h1>Create New Category</h1>
-<form method="POST" action="{{ route('admin.categories.store') }}">
-@csrf
+    <div class="body">
+        <div class="w-full">
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="p-6 bg-white border-b border-gray-200" >
+                <form method="POST" action="{{ route('admin.categories.store') }}">       
+        @csrf
+            <div class="mb-4">
+            <label $for="name" class="text-xl text-gray-600">Category Name</label>
+            <br>
+            <input name="name" id="name" placeholder="Enter Name" class="border-2 border-gray-200 p-2 w-full @error('name') is-invalid @enderror">
+            @error('name')
+            <div class="text-red-500 border-2 border-gray-200 p-2 w-full">{{ $message }}</div>
+            @enderror
+            </div>
+            <div class="mb-4">
+                <label $for="description" class="text-xl text-gray-600">Category Description</label>
+                <input name="description" id="description" placeholder="Enter Category Description" class="border-2 border-gray-200 p-2 w-full @error('name') is-invalid @enderror">
+            </div>
 
-    <label $for="name">Category Name</label>
-    <input name="name" id="name" placeholder="Enter Category Name" class="@error('name') is-invalid @enderror">
-    @error('name')
-    <div>{{ $message }}</div>
-    @enderror
-    <hr>
-    <label $for="description">Category Description</label>
-    <input name="description" id="description" placeholder="Enter Category Description">
-    <hr>
-    <label $for="status">Category Statue</label>
-    <select name="status">
-        <option>Choose one...</option> 
-        @foreach([0=>"Not Active", 1=>"Active"] as $key => $val)
-        <option value="{{ $key }}">{{ $val }}</option> 
-        @endforeach
-    </select>
-    <hr>
-    <input name="submit" type="submit" value="Create Category">
-</form>
 
-@endsection
+            <div class="mb-4">
+                <label $for="status" class="text-xl text-gray-600">Category Statue</label>
+                <select name="status" class="border-2 border-gray-200 p-2 w-full">
+                    <option value="">Choose one...</option> 
+                    @foreach([0=>"Not Active", 1=>"Active"] as $key => $val)
+                    <option value="{{ $key }}">{{ $val }}</option> 
+                    @endforeach
+                </select>
+            
+            </div>
+            
+            <input name="submit" type="submit" class="bg-blue-500 text-white px-2 py-1" value="Create category">
+        </form>
+                </div>
+            </div>
+        
+        </div>
+        
+        
+        </div>
+    </div>
+
+</x-admin.layout>
