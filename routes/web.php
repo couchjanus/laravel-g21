@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Enums\UserGroup;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +25,7 @@ Route::get('/upload', function () {
     return view('upload');
 });
 
-Route::name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")->group(function(){ 
+Route::middleware(['auth', 'groups:'.implode(',',[UserGroup::Administrator,UserGroup::Manager])])->name('admin.')->prefix('admin')->namespace("App\Http\Controllers\Admin")->group(function(){ 
     Route::get('', 'DashboardController@index')->name('dashboard');
     Route::get('config', 'ConfigController@index')->name('config');
     Route::resource('users', 'UserController');

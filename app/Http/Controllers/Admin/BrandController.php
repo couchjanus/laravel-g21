@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class BrandController extends Controller
 {
@@ -15,6 +17,8 @@ class BrandController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('brand_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         return view('admin.brands.index');
     }
 
@@ -25,6 +29,7 @@ class BrandController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('brand_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.brands.create');
     }
 
@@ -51,6 +56,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
+        abort_if(Gate::denies('brand_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //
     }
 
@@ -62,6 +68,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
+        abort_if(Gate::denies('brand_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         //
     }
 
@@ -85,11 +92,13 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
+        abort_if(Gate::denies('brand_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $brand->delete();
         return redirect()->route('admin.brands.index');
     }
     public function trashed()
     {
+        abort_if(Gate::denies('brand_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.brands.trashed');
     }
     public function restore($id)
@@ -101,6 +110,7 @@ class BrandController extends Controller
     }
     public function force($id)
     {
+        abort_if(Gate::denies('brand_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $brand = Brand::withTrashed()
         ->where('id', $id)
         ->first();

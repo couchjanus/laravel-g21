@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'group',
     ];
 
     /**
@@ -58,4 +59,17 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function __construct(array $attributes=[])
+    {
+        parent::__construct($attributes);
+        self::create(function(User $user){
+            if(!$user->roles()->get()->contains(2)){
+                $user->roles()->attach(2);
+            });
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
 }
